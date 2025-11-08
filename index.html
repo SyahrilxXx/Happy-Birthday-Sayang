@@ -1,0 +1,121 @@
+<!doctype html>
+
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Birth Day Sayang 🎉</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#ff5c8a; --muted:#9aa4b2;
+      --glass: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Noto Sans',sans-serif;background:linear-gradient(120deg,#081226 0%, #071022 50%, #071826 100%);color:white}
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{width:960px;max-width:98%;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:28px;box-shadow:0 10px 40px rgba(2,6,23,0.6);position:relative;overflow:hidden}
+    header{display:flex;gap:20px;align-items:center}
+    .avatar{width:160px;height:160px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#ff8fb3);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:28px;color:#111;flex-shrink:0;position:relative;overflow:hidden}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    h1{margin:0;font-size:28px}
+    p.lead{color:var(--muted);margin-top:6px}
+    .message{margin-top:18px;padding:18px;background:var(--glass);border-radius:12px}
+    .big{font-size:20px;line-height:1.4}
+    .controls{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+    .btn{background:linear-gradient(90deg,var(--accent),#ff8fb3);border:none;padding:10px 16px;border-radius:10px;color:#111;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(255,92,138,0.18)}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-weight:600}
+    .footer{display:flex;justify-content:space-between;align-items:center;margin-top:18px;color:var(--muted);font-size:14px}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:20px}
+    .gallery img{width:100%;border-radius:12px;object-fit:cover;height:220px;box-shadow:0 4px 14px rgba(0,0,0,0.3)}
+    .hearts{position:absolute;right:18px;bottom:18px;pointer-events:none}
+    .heart{width:22px;height:22px;background:var(--accent);transform:rotate(-45deg);border-radius:4px;position:absolute;opacity:0;animation:pop 2.6s linear infinite}
+    .heart:before,.heart:after{content:'';position:absolute;width:22px;height:22px;border-radius:50%;background:var(--accent)}
+    .heart:before{top:-11px}
+    .heart:after{left:11px}
+    @keyframes pop{0%{opacity:0;transform:translateY(0) scale(0.6) rotate(-45deg)}10%{opacity:1}100%{opacity:0;transform:translateY(-260px) scale(1.2) rotate(-45deg)}}
+    canvas.confetti{position:absolute;inset:0;z-index:0;pointer-events:none}
+    .content{position:relative;z-index:2}
+    @media (max-width:720px){header{flex-direction:column;align-items:center}.avatar{width:140px;height:140px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="main">
+      <canvas class="confetti" id="confetti"></canvas>
+      <div class="hearts" aria-hidden="true">
+        <div class="heart" style="left:10px;animation-delay:0s"></div>
+        <div class="heart" style="left:40px;animation-delay:0.4s"></div>
+        <div class="heart" style="left:70px;animation-delay:0.9s"></div>
+      </div>
+      <div class="content">
+        <header>
+          <div class="avatar" id="avatar">
+            <span id="initials">CESY</span>
+          </div>
+          <div>
+            <h1>Selamat Ulang Tahun <strong>Sayang</strong> 🎂</h1>
+            <p class="lead">9 November 2025 Semoga hari ini penuh kejutan manis dan cinta.</p>
+            <div style="margin-top:8px;color:var(--muted)">Dari: <strong>Pacarmu</strong></div>
+          </div>
+        </header><div class="message" aria-live="polite">
+      <p class="big">Hai Sayang 💖, hari ini adalah hari yang spesial karena hari ini adalah tanggal dimana kamu dilahirkan. Semoga setiap langkahmu diberkati, senyumanmu selalu lebar, dan semua impianmu perlahan menjadi kenyataan. Terima kasih sudah menjadi cahaya di hidupku.</p>
+    </div>
+
+    <div class="gallery">
+      <img src="https://files.catbox.moe/f3h21u.jpg" alt="">
+      <img src="https://files.catbox.moe/jj2gj8.jpg" alt="">
+      <img src="https://files.catbox.moe/rzclr1.jpg" alt="">
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="playSong">Putar Lagu Kejutan</button>
+      <button class="btn" id="playSound">Lagu Khusus</button>
+      <button class="btn secondary" id="shareBtn">Bagikan Ucapan</button>
+    </div>
+
+    <div class="footer">
+      <div>✨ Semoga ulang tahunmu penuh cinta.</div>
+      <div style="color:var(--muted)">9 November 2025</div>
+    </div>
+  </div>
+</div>
+
+  <audio id="song" src="https://assistant-emerald-roxsiho30u.edgeone.app/vv5y8h.mp3" preload="auto"></audio>
+  <audio id="sound" src="https://southern-amber-fmqghadhqj.edgeone.app/dir21w.mp3" preload="auto"></audio>
+
+  </div>  <script>
+    const name = 'Cesy';
+    document.title = `Selamat Ulang Tahun Sayang 🎉`;
+
+    const song = document.getElementById('song');
+    const sound = document.getElementById('sound');
+
+    document.getElementById('playSong').addEventListener('click', () => {
+      song.currentTime = 0;
+      song.play().catch(() => alert('Klik ulang jika belum terdengar 💕'));
+    });
+
+    document.getElementById('playSound').addEventListener('click', () => {
+      sound.currentTime = 0;
+      sound.play().catch(() => alert('Klik ulang jika belum terdengar 💕'));
+    });
+
+    document.getElementById('shareBtn').addEventListener('click', async ()=>{
+      const text = `Selamat Ulang Tahun ${name}! 🎉\nSemoga hari ini penuh cinta dan kebahagiaan.`;
+      try{
+        if(navigator.share){await navigator.share({title:`Selamat Ulang Tahun ${name}`, text});}
+        else{await navigator.clipboard.writeText(text);alert('Teks ucapan disalin ke clipboard.');}
+      }catch(e){alert('Gagal membagikan: '+e.message)}
+    });
+
+    (function confetti(){
+      const canvas=document.getElementById('confetti');const ctx=canvas.getContext('2d');let w=0,h=0,pieces=[];
+      function resize(){w=canvas.width=canvas.clientWidth;h=canvas.height=canvas.clientHeight;}
+      window.addEventListener('resize',resize);resize();
+      function random(min,max){return Math.random()*(max-min)+min}
+      function initPieces(n=80){pieces=[];for(let i=0;i<n;i++){pieces.push({x:random(0,w),y:random(-h,0),r:random(4,10),d:random(1,4),color:['#ff5c8a','#ffd166','#8bd3ff','#bdecb6'][Math.floor(Math.random()*4)],tilt:random(-10,10)});}}
+      initPieces(80);
+      function draw(){ctx.clearRect(0,0,w,h);for(let p of pieces){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x+p.r,p.y+p.r*0.6);ctx.lineWidth=p.r;ctx.strokeStyle=p.color;ctx.stroke();p.y+=p.d+1;p.x+=Math.sin(p.y/20);if(p.y>h+20){p.y=random(-40,-10);p.x=random(0,w);}}requestAnimationFrame(draw);}draw();
+    })();
+  </script></body>
+</html>
